@@ -1,12 +1,12 @@
 package astar.algorithm;
 
 public class Node {
-    public int gx = 0;
-    public int hx = -1;
-    public int rowIndex;
-    public int colIndex;
-    public boolean isBlocked = false;
-    public boolean isDiagonal = false;
+    private int gx = 0;
+    private int hx = -1;
+    private int rowIndex;
+    private int colIndex;
+    private boolean isBlocked = false;
+    private boolean isDiagonal = false;
     private Node parentNode = null;
 
     public Node(int rowIndex, int colIndex) {
@@ -37,6 +37,26 @@ public class Node {
 
     public void setParentNode(Node parentNode) {
         this.parentNode = parentNode;
+    }
+
+    public void setHx(int hx) {
+        this.hx = hx;
+    }
+
+    public int getRowIndex() {
+        return rowIndex;
+    }
+
+    public int getColIndex() {
+        return colIndex;
+    }
+
+    public int getGx() {
+        return gx;
+    }
+
+    public void setGx(int gx) {
+        this.gx = gx;
     }
 
     @Override

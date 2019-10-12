@@ -17,7 +17,7 @@ public class AStarAlgorithm {
     }
 
     public void search(Node startNode) {
-        startNode.hx = new Heuristics().manhattanHeuristics(startNode, goalNode) * SearchSpaceDefinition.UP_OR_DOWN_MOVE_COST;
+        startNode.setHx(new Heuristics().manhattanHeuristics(startNode, goalNode) * SearchSpaceDefinition.UP_OR_DOWN_MOVE_COST);
         toTraverse.add(startNode);
         do {
             Node node = toTraverse.poll();
@@ -28,28 +28,28 @@ public class AStarAlgorithm {
     public List<Node> neighbours(Node node) {
         List<Node> neighbours = new ArrayList<>();
         //neighbour up
-        if (node.rowIndex - 1 <= 0 && searchSpace[node.rowIndex - 1][node.colIndex] == null) {
-            neighbours.add(getNeighbourForLocation(node, node.rowIndex - 1, node.colIndex));
+        if (node.getRowIndex() - 1 <= 0 && searchSpace[node.getRowIndex() - 1][node.getColIndex()] == null) {
+            neighbours.add(getNeighbourForLocation(node, node.getRowIndex() - 1, node.getColIndex()));
         }
         //neighbour down
-        if (node.rowIndex + 1 <= SearchSpaceDefinition.NUMBER_OF_ROWS && searchSpace[node.rowIndex + 1][node.colIndex] == null) {
-            neighbours.add(getNeighbourForLocation(node, node.rowIndex + 1, node.colIndex));
+        if (node.getRowIndex() + 1 <= SearchSpaceDefinition.NUMBER_OF_ROWS && searchSpace[node.getRowIndex() + 1][node.getColIndex()] == null) {
+            neighbours.add(getNeighbourForLocation(node, node.getRowIndex() + 1, node.getColIndex()));
         }
         //neighbour on left
-        if (node.colIndex - 1 <= SearchSpaceDefinition.NUMBER_OF_COLUMNS && searchSpace[node.rowIndex][node.colIndex - 1] == null) {
-            neighbours.add(getNeighbourForLocation(node, node.rowIndex, node.colIndex - 1));
+        if (node.getColIndex() - 1 <= SearchSpaceDefinition.NUMBER_OF_COLUMNS && searchSpace[node.getRowIndex()][node.getColIndex() - 1] == null) {
+            neighbours.add(getNeighbourForLocation(node, node.getRowIndex(), node.getColIndex() - 1));
         }
         //neighbour on right
-        if (node.colIndex + 1 <= SearchSpaceDefinition.NUMBER_OF_COLUMNS && searchSpace[node.rowIndex][node.colIndex + 1] == null) {
-            neighbours.add(getNeighbourForLocation(node, node.rowIndex, node.colIndex + 1));
+        if (node.getColIndex() + 1 <= SearchSpaceDefinition.NUMBER_OF_COLUMNS && searchSpace[node.getRowIndex()][node.getColIndex() + 1] == null) {
+            neighbours.add(getNeighbourForLocation(node, node.getRowIndex(), node.getColIndex() + 1));
         }
         return neighbours;
     }
 
     private Node getNeighbourForLocation(Node node, int rowIndex, int i) {
         final Node neighbour = new Node(rowIndex, i);
-        neighbour.gx = node.gx + SearchSpaceDefinition.UP_OR_DOWN_MOVE_COST;
-        neighbour.hx = new Heuristics().manhattanHeuristics(neighbour, goalNode) * SearchSpaceDefinition.UP_OR_DOWN_MOVE_COST;
+        neighbour.setGx(node.getGx() + SearchSpaceDefinition.UP_OR_DOWN_MOVE_COST);
+        neighbour.setHx(new Heuristics().manhattanHeuristics(neighbour, goalNode) * SearchSpaceDefinition.UP_OR_DOWN_MOVE_COST);
         return neighbour;
     }
 }

@@ -2,8 +2,8 @@ package astar.algorithm;
 
 public class Heuristics {
     public int manhattanHeuristics(Node currentNode, Node finalNode) {
-        return Math.abs(currentNode.colIndex - finalNode.colIndex)
+        return Math.abs(currentNode.getRowIndex() - finalNode.getRowIndex())
                 +
-                Math.abs(currentNode.colIndex - finalNode.colIndex);
+                Math.abs(currentNode.getColIndex() - finalNode.getColIndex());
     }
 }

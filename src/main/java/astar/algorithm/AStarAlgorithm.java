@@ -21,7 +21,7 @@ public class AStarAlgorithm {
 
                 for (Node neighbour : new NodeNeighbourLocator(nodeUnderAnalysis, nodesAlreadyVisited, toTraverse).getPendingTraversalNeighbours()) {
                     toTraverse.add(neighbour);
-                    neighbour.setChildNode(nodeUnderAnalysis);
+                    neighbour.setPreviousNode(nodeUnderAnalysis);
                 }
             }
         } while (!toTraverse.isEmpty());
@@ -35,8 +35,8 @@ public class AStarAlgorithm {
         System.out.println("***********");
         do {
             System.out.println(node);
-            node = node.getChildNode();
-        } while (node.getChildNode() != null);
+            node = node.getPreviousNode();
+        } while (node.getPreviousNode() != null);
         System.out.println(node);
     }
 }

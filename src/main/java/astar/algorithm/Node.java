@@ -6,7 +6,7 @@ public class Node {
     private int rowIndex;
     private int colIndex;
     private boolean isDiagonal = false;
-    private Node childNode = null;
+    private Node previousNode = null;
 
     public Node(int rowIndex, int colIndex) {
         this.rowIndex = rowIndex;
@@ -23,12 +23,12 @@ public class Node {
         return gx + hx;
     }
 
-    public Node getChildNode() {
-        return childNode;
+    public Node getPreviousNode() {
+        return previousNode;
     }
 
-    public void setChildNode(Node childNode) {
-        this.childNode = childNode;
+    public void setPreviousNode(Node previousNode) {
+        this.previousNode = previousNode;
     }
 
     public void setHx(int hx) {
@@ -60,7 +60,7 @@ public class Node {
                 ", hx=" + hx +
                 ", fx=" + fx() +
                 ", isDiagonal=" + isDiagonal +
-                ", childNode= {" + ((childNode != null) ? (+childNode.rowIndex + ", " + childNode.colIndex) : "null") + "}" +
+                ", previousNode= {" + ((previousNode != null) ? (+previousNode.rowIndex + ", " + previousNode.colIndex) : "No Previous Node") + "}" +
                 '}';
     }
 

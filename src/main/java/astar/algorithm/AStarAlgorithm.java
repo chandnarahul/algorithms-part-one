@@ -1,13 +1,10 @@
 package astar.algorithm;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 
 public class AStarAlgorithm {
 
-    public Node search(Node startNode) {
+    public Optional<Node> search(Node startNode) {
         List<Node> nodesAlreadyVisited = new ArrayList<>();
         Queue<Node> toTraverse = new PriorityQueue<>(new NodeComparator());
         startNode.setHx(new Heuristics().manhattanHeuristics(startNode, SearchSpaceAttributes.GOAL_NODE) * SearchSpaceAttributes.UP_OR_DOWN_MOVE_COST);
@@ -17,7 +14,7 @@ public class AStarAlgorithm {
             System.out.println(nodeUnderAnalysis);
 
             if (nodeUnderAnalysis.equals(SearchSpaceAttributes.GOAL_NODE)) {
-                return nodeUnderAnalysis;
+                return Optional.of(nodeUnderAnalysis);
             } else {
                 toTraverse.remove(nodeUnderAnalysis);
                 nodesAlreadyVisited.add(nodeUnderAnalysis);
@@ -28,12 +25,14 @@ public class AStarAlgorithm {
                 }
             }
         } while (!toTraverse.isEmpty());
-
-        throw new RuntimeException("Unable to find path!");
+        return Optional.empty();
     }
 
     public void showPathFrom(Node node) {
+        System.out.println("");
+        System.out.println("***********");
         System.out.println("A Star Shortest Path Algorithm");
+        System.out.println("***********");
         do {
             System.out.println(node);
             node = node.getChildNode();

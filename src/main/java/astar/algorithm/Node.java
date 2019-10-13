@@ -69,7 +69,7 @@ public class Node {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) return Boolean.TRUE;
         if (o == null || getClass() != o.getClass()) return false;
 
         Node node = (Node) o;
@@ -83,50 +83,6 @@ public class Node {
         return 31 * getRowIndex() + getColIndex();
     }
 
-    public List<Node> neighbours() {
-        List<Node> neighbours = new ArrayList<>();
-        //neighbour up
-        if (this.getRowIndex() - 1 >= 0 && SearchSpaceAttributes.nodeIsNotBlocked(this.getRowIndex() - 1, this.getColIndex())) {
-            neighbours.add(getNeighbourForLocation(this.getRowIndex() - 1, this.getColIndex(), false));
-        }
-
-        //neighbour down
-        if (this.getRowIndex() + 1 < SearchSpaceAttributes.NUMBER_OF_ROWS && SearchSpaceAttributes.nodeIsNotBlocked(this.getRowIndex() + 1, this.getColIndex())) {
-            neighbours.add(getNeighbourForLocation(this.getRowIndex() + 1, this.getColIndex(), false));
-        }
-
-        //neighbour on left
-        if (this.getColIndex() - 1 >= 0 && SearchSpaceAttributes.nodeIsNotBlocked(this.getRowIndex(), this.getColIndex() - 1)) {
-            neighbours.add(getNeighbourForLocation(this.getRowIndex(), this.getColIndex() - 1, false));
-        }
-
-        //neighbour on right
-        if (this.getColIndex() + 1 < SearchSpaceAttributes.NUMBER_OF_COLUMNS && SearchSpaceAttributes.nodeIsNotBlocked(this.getRowIndex(), this.getColIndex() + 1)) {
-            neighbours.add(getNeighbourForLocation(this.getRowIndex(), this.getColIndex() + 1, false));
-        }
-
-        //neighbour on diagonal up right
-        if (this.getColIndex() - 1 >= 0 && this.getRowIndex() - 1 >= 0 && SearchSpaceAttributes.nodeIsNotBlocked(this.getRowIndex() - 1, this.getColIndex() - 1)) {
-            neighbours.add(getNeighbourForLocation(this.getRowIndex() - 1, this.getColIndex() - 1, true));
-        }
-
-        //neighbour on diagonal up left
-        if (this.getColIndex() + 1 < SearchSpaceAttributes.NUMBER_OF_COLUMNS && this.getRowIndex() - 1 >= 0 && SearchSpaceAttributes.nodeIsNotBlocked(this.getRowIndex() - 1, this.getColIndex() + 1)) {
-            neighbours.add(getNeighbourForLocation(this.getRowIndex() - 1, this.getColIndex() + 1, true));
-        }
-
-        //neighbour on diagonal down right
-        if (this.getColIndex() - 1 >= 0 && this.getRowIndex() + 1 < SearchSpaceAttributes.NUMBER_OF_ROWS && SearchSpaceAttributes.nodeIsNotBlocked(this.getRowIndex() + 1, this.getColIndex() - 1)) {
-            neighbours.add(getNeighbourForLocation(this.getRowIndex() + 1, this.getColIndex() - 1, true));
-        }
-
-        //neighbour on diagonal down left
-        if (this.getColIndex() + 1 < SearchSpaceAttributes.NUMBER_OF_COLUMNS && this.getRowIndex() + 1 < SearchSpaceAttributes.NUMBER_OF_ROWS && SearchSpaceAttributes.nodeIsNotBlocked(this.getRowIndex() + 1, this.getColIndex() + 1)) {
-            neighbours.add(getNeighbourForLocation(this.getRowIndex() + 1, this.getColIndex() + 1, true));
-        }
-        return neighbours;
-    }
-
     private Node getNeighbourForLocation(int rowIndex, int columnIndex, boolean diagonal) {
         final Node neighbour = new Node(rowIndex, columnIndex, diagonal);
         if (diagonal) {
@@ -138,4 +94,73 @@ public class Node {
         }
         return neighbour;
     }
+
+    public List<Node> unTraversedNeighbours(List<Node> nodesAlreadyTraversed) {
+        List<Node> neighbours = new ArrayList<>();
+        //neighbour up
+        if (this.getRowIndex() - 1 >= 0 && SearchSpaceAttributes.nodeIsNotBlocked(this.getRowIndex() - 1, this.getColIndex())) {
+            final Node neighbourForLocation = getNeighbourForLocation(this.getRowIndex() - 1, this.getColIndex(), false);
+            if (!nodesAlreadyTraversed.contains(neighbourForLocation)) {
+                neighbours.add(neighbourForLocation);
+            }
+        }
+
+        //neighbour down
+        if (this.getRowIndex() + 1 < SearchSpaceAttributes.NUMBER_OF_ROWS && SearchSpaceAttributes.nodeIsNotBlocked(this.getRowIndex() + 1, this.getColIndex())) {
+            final Node neighbourForLocation = getNeighbourForLocation(this.getRowIndex() + 1, this.getColIndex(), false);
+            if (!nodesAlreadyTraversed.contains(neighbourForLocation)) {
+                neighbours.add(neighbourForLocation);
+            }
+        }
+
+        //neighbour on left
+        if (this.getColIndex() - 1 >= 0 && SearchSpaceAttributes.nodeIsNotBlocked(this.getRowIndex(), this.getColIndex() - 1)) {
+            final Node neighbourForLocation = getNeighbourForLocation(this.getRowIndex(), this.getColIndex() - 1, false);
+            if (!nodesAlreadyTraversed.contains(neighbourForLocation)) {
+                neighbours.add(neighbourForLocation);
+            }
+        }
+
+        //neighbour on right
+        if (this.getColIndex() + 1 < SearchSpaceAttributes.NUMBER_OF_COLUMNS && SearchSpaceAttributes.nodeIsNotBlocked(this.getRowIndex(), this.getColIndex() + 1)) {
+            final Node neighbourForLocation = getNeighbourForLocation(this.getRowIndex(), this.getColIndex() + 1, false);
+            if (!nodesAlreadyTraversed.contains(neighbourForLocation)) {
+                neighbours.add(neighbourForLocation);
+            }
+        }
+
+        //neighbour on diagonal up right
+        if (this.getColIndex() - 1 >= 0 && this.getRowIndex() - 1 >= 0 && SearchSpaceAttributes.nodeIsNotBlocked(this.getRowIndex() - 1, this.getColIndex() - 1)) {
+            final Node neighbourForLocation = getNeighbourForLocation(this.getRowIndex() - 1, this.getColIndex() - 1, Boolean.TRUE);
+            if (!nodesAlreadyTraversed.contains(neighbourForLocation)) {
+                neighbours.add(neighbourForLocation);
+            }
+        }
+
+        //neighbour on diagonal up left
+        if (this.getColIndex() + 1 < SearchSpaceAttributes.NUMBER_OF_COLUMNS && this.getRowIndex() - 1 >= 0 && SearchSpaceAttributes.nodeIsNotBlocked(this.getRowIndex() - 1, this.getColIndex() + 1)) {
+            final Node neighbourForLocation = getNeighbourForLocation(this.getRowIndex() - 1, this.getColIndex() + 1, Boolean.TRUE);
+            if (!nodesAlreadyTraversed.contains(neighbourForLocation)) {
+                neighbours.add(neighbourForLocation);
+            }
+        }
+
+        //neighbour on diagonal down right
+        if (this.getColIndex() - 1 >= 0 && this.getRowIndex() + 1 < SearchSpaceAttributes.NUMBER_OF_ROWS && SearchSpaceAttributes.nodeIsNotBlocked(this.getRowIndex() + 1, this.getColIndex() - 1)) {
+            final Node neighbourForLocation = getNeighbourForLocation(this.getRowIndex() + 1, this.getColIndex() - 1, Boolean.TRUE);
+            if (!nodesAlreadyTraversed.contains(neighbourForLocation)) {
+                neighbours.add(neighbourForLocation);
+            }
+        }
+
+        //neighbour on diagonal down left
+        if (this.getColIndex() + 1 < SearchSpaceAttributes.NUMBER_OF_COLUMNS && this.getRowIndex() + 1 < SearchSpaceAttributes.NUMBER_OF_ROWS && SearchSpaceAttributes.nodeIsNotBlocked(this.getRowIndex() + 1, this.getColIndex() + 1)) {
+            final Node neighbourForLocation = getNeighbourForLocation(this.getRowIndex() + 1, this.getColIndex() + 1, Boolean.TRUE);
+            if (!nodesAlreadyTraversed.contains(neighbourForLocation)) {
+                neighbours.add(neighbourForLocation);
+            }
+        }
+        return neighbours;
+    }
+
 }

@@ -32,8 +32,8 @@ public class AStarAlgorithm {
         throw new RuntimeException("Unable to find path!");
     }
 
-    public void showPath(Node node) {
-        System.out.println("A Star Shortest Path");
+    public void showPathFrom(Node node) {
+        System.out.println("A Star Shortest Path Algorithm");
         do {
             System.out.println(node);
             node = node.getChildNode();

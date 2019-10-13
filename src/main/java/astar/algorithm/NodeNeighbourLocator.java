@@ -36,7 +36,7 @@ public class NodeNeighbourLocator {
         List<Node> neighbours = new ArrayList<>();
         //neighbour up
         if (currentNode.getRowIndex() - 1 >= 0) {
-            final Optional<Node> neighbourForLocation = getNeighbourForLocation(currentNode.getRowIndex() - 1, currentNode.getColIndex(), false);
+            final Optional<Node> neighbourForLocation = getNeighbourForLocation(currentNode.getRowIndex() - 1, currentNode.getColIndex(), Boolean.FALSE);
             if (neighbourForLocation.isPresent()) {
                 neighbours.add(neighbourForLocation.get());
             }
@@ -44,7 +44,7 @@ public class NodeNeighbourLocator {
 
         //neighbour down
         if (currentNode.getRowIndex() + 1 < SearchSpaceAttributes.NUMBER_OF_ROWS) {
-            final Optional<Node> neighbourForLocation = getNeighbourForLocation(currentNode.getRowIndex() + 1, currentNode.getColIndex(), false);
+            final Optional<Node> neighbourForLocation = getNeighbourForLocation(currentNode.getRowIndex() + 1, currentNode.getColIndex(), Boolean.FALSE);
             if (neighbourForLocation.isPresent()) {
                 neighbours.add(neighbourForLocation.get());
             }
@@ -52,7 +52,7 @@ public class NodeNeighbourLocator {
 
         //neighbour on left
         if (currentNode.getColIndex() - 1 >= 0) {
-            final Optional<Node> neighbourForLocation = getNeighbourForLocation(currentNode.getRowIndex(), currentNode.getColIndex() - 1, false);
+            final Optional<Node> neighbourForLocation = getNeighbourForLocation(currentNode.getRowIndex(), currentNode.getColIndex() - 1, Boolean.FALSE);
             if (neighbourForLocation.isPresent()) {
                 neighbours.add(neighbourForLocation.get());
             }
@@ -60,7 +60,7 @@ public class NodeNeighbourLocator {
 
         //neighbour on right
         if (currentNode.getColIndex() + 1 < SearchSpaceAttributes.NUMBER_OF_COLUMNS) {
-            final Optional<Node> neighbourForLocation = getNeighbourForLocation(currentNode.getRowIndex(), currentNode.getColIndex() + 1, false);
+            final Optional<Node> neighbourForLocation = getNeighbourForLocation(currentNode.getRowIndex(), currentNode.getColIndex() + 1, Boolean.FALSE);
             if (neighbourForLocation.isPresent()) {
                 neighbours.add(neighbourForLocation.get());
             }

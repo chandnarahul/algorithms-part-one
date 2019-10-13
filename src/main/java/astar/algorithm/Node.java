@@ -1,8 +1,5 @@
 package astar.algorithm;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Node {
     private int gx = 0;
     private int hx = -1;

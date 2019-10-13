@@ -19,9 +19,9 @@ public class AStarAlgorithm {
 
             System.out.println(nodeUnderAnalysis);
             if (nodeUnderAnalysis.equals(SearchSpaceAttributes.GOAL_NODE)) {
-                return nodeUnderAnalysis.getChildNode();
+                return nodeUnderAnalysis;
             } else {
-                for (Node neighbour : nodeUnderAnalysis.unTraversedNeighbours(nodesAlreadyVisited)) {
+                for (Node neighbour : new NodeNeighbourLocator(nodeUnderAnalysis).unTraversedNeighbours(nodesAlreadyVisited)) {
                     if (!toTraverse.contains(neighbour)) {
                         toTraverse.add(neighbour);
                         neighbour.setChildNode(nodeUnderAnalysis);

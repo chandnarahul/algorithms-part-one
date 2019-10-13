@@ -21,11 +21,9 @@ public class AStarAlgorithm {
             if (nodeUnderAnalysis.equals(SearchSpaceAttributes.GOAL_NODE)) {
                 return nodeUnderAnalysis;
             } else {
-                for (Node neighbour : new NodeNeighbourLocator(nodeUnderAnalysis).unTraversedNeighbours(nodesAlreadyVisited)) {
-                    if (!toTraverse.contains(neighbour)) {
-                        toTraverse.add(neighbour);
-                        neighbour.setChildNode(nodeUnderAnalysis);
-                    }
+                for (Node neighbour : new NodeNeighbourLocator(nodeUnderAnalysis, nodesAlreadyVisited, toTraverse).unTraversedNeighbours()) {
+                    toTraverse.add(neighbour);
+                    neighbour.setChildNode(nodeUnderAnalysis);
                 }
             }
         } while (!toTraverse.isEmpty());

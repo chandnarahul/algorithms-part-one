@@ -14,14 +14,15 @@ public class AStarAlgorithm {
         toTraverse.add(startNode);
         do {
             Node nodeUnderAnalysis = toTraverse.poll();
-            toTraverse.remove(nodeUnderAnalysis);
-            nodesAlreadyVisited.add(nodeUnderAnalysis);
-
             System.out.println(nodeUnderAnalysis);
+
             if (nodeUnderAnalysis.equals(SearchSpaceAttributes.GOAL_NODE)) {
                 return nodeUnderAnalysis;
             } else {
-                for (Node neighbour : new NodeNeighbourLocator(nodeUnderAnalysis, nodesAlreadyVisited, toTraverse).unTraversedNeighbours()) {
+                toTraverse.remove(nodeUnderAnalysis);
+                nodesAlreadyVisited.add(nodeUnderAnalysis);
+
+                for (Node neighbour : new NodeNeighbourLocator(nodeUnderAnalysis, nodesAlreadyVisited, toTraverse).getPendingTraversalNeighbours()) {
                     toTraverse.add(neighbour);
                     neighbour.setChildNode(nodeUnderAnalysis);
                 }

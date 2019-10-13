@@ -32,10 +32,10 @@ public class NodeNeighbourLocator {
         }
     }
 
-    public List<Node> unTraversedNeighbours() {
+    public List<Node> getPendingTraversalNeighbours() {
         List<Node> neighbours = new ArrayList<>();
         //neighbour up
-        if (currentNode.getRowIndex() - 1 >= 0 && SearchSpaceAttributes.nodeIsNotBlocked(currentNode.getRowIndex() - 1, currentNode.getColIndex())) {
+        if (currentNode.getRowIndex() - 1 >= 0) {
             final Optional<Node> neighbourForLocation = getNeighbourForLocation(currentNode.getRowIndex() - 1, currentNode.getColIndex(), false);
             if (neighbourForLocation.isPresent()) {
                 neighbours.add(neighbourForLocation.get());

@@ -6,8 +6,9 @@ public class SearchSpaceAttributes {
 
     public static final int DIAGONAL_MOVE_COST = 14;
     public static final int UP_OR_DOWN_MOVE_COST = 10;
-
-    public static final int[][] BLOCKED_NODES_POSITION = {
+    public static final Node START_NODE = new Node(3, 3);
+    public static final Node GOAL_NODE = new Node(1, 6);
+    private static final int[][] BLOCKED_NODES_POSITION = {
             {2, 3},
             {2, 4},
             {2, 5},
@@ -15,9 +16,6 @@ public class SearchSpaceAttributes {
             {2, 7},
             {1, 7}
     };
-
-    public static final Node START_NODE = new Node(3, 3);
-    public static final Node GOAL_NODE = new Node(1, 6);
 
 
     private SearchSpaceAttributes() {

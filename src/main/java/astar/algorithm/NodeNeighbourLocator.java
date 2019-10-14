@@ -33,6 +33,14 @@ public class NodeNeighbourLocator {
 
     public List<Node> getPendingTraversalNeighbours() {
         List<Node> neighbours = new ArrayList<>();
+        neighbours.addAll(getHorizontalVerticalNeighbours());
+        neighbours.addAll(getDiagonalNeighbours());
+
+        return neighbours;
+    }
+
+    private List<Node> getHorizontalVerticalNeighbours() {
+        List<Node> neighbours = new ArrayList<>();
         //neighbour up
         if (currentNode.getRowIndex() - 1 >= 0) {
             final Optional<Node> neighbourForLocation = locateNeighbours(currentNode.getRowIndex() - 1, currentNode.getColIndex(), Boolean.FALSE);
@@ -64,38 +72,51 @@ public class NodeNeighbourLocator {
                 neighbours.add(neighbourForLocation.get());
             }
         }
+        return neighbours;
+    }
 
-        //neighbour on diagonal up right
-        if (currentNode.getColIndex() - 1 >= 0 && currentNode.getRowIndex() - 1 >= 0) {
-            final Optional<Node> neighbourForLocation = locateNeighbours(currentNode.getRowIndex() - 1, currentNode.getColIndex() - 1, Boolean.TRUE);
-            if (neighbourForLocation.isPresent()) {
-                neighbours.add(neighbourForLocation.get());
-            }
-        }
+    private List<Node> getDiagonalNeighbours() {
+        List<Node> diagonalNeighbours = new ArrayList<>();
+        diagonalNeighbours.addAll(getRightDiagonals());
+        diagonalNeighbours.addAll(getLeftDiagonals());
+        return diagonalNeighbours;
+    }
 
+    private List<Node> getLeftDiagonals() {
+        List<Node> diagonalNeighbours = new ArrayList<>();
         //neighbour on diagonal up left
         if (currentNode.getColIndex() + 1 < SearchSpaceAttributes.NUMBER_OF_COLUMNS && currentNode.getRowIndex() - 1 >= 0) {
             final Optional<Node> neighbourForLocation = locateNeighbours(currentNode.getRowIndex() - 1, currentNode.getColIndex() + 1, Boolean.TRUE);
             if (neighbourForLocation.isPresent()) {
-                neighbours.add(neighbourForLocation.get());
+                diagonalNeighbours.add(neighbourForLocation.get());
             }
         }
-
-        //neighbour on diagonal down right
-        if (currentNode.getColIndex() - 1 >= 0 && currentNode.getRowIndex() + 1 < SearchSpaceAttributes.NUMBER_OF_ROWS) {
-            final Optional<Node> neighbourForLocation = locateNeighbours(currentNode.getRowIndex() + 1, currentNode.getColIndex() - 1, Boolean.TRUE);
-            if (neighbourForLocation.isPresent()) {
-                neighbours.add(neighbourForLocation.get());
-            }
-        }
-
         //neighbour on diagonal down left
         if (currentNode.getColIndex() + 1 < SearchSpaceAttributes.NUMBER_OF_COLUMNS && currentNode.getRowIndex() + 1 < SearchSpaceAttributes.NUMBER_OF_ROWS) {
             final Optional<Node> neighbourForLocation = locateNeighbours(currentNode.getRowIndex() + 1, currentNode.getColIndex() + 1, Boolean.TRUE);
             if (neighbourForLocation.isPresent()) {
-                neighbours.add(neighbourForLocation.get());
+                diagonalNeighbours.add(neighbourForLocation.get());
             }
         }
-        return neighbours;
+        return diagonalNeighbours;
+    }
+
+    private List<Node> getRightDiagonals() {
+        List<Node> diagonalNeighbours = new ArrayList<>();
+        //neighbour on diagonal up right
+        if (currentNode.getColIndex() - 1 >= 0 && currentNode.getRowIndex() - 1 >= 0) {
+            final Optional<Node> neighbourForLocation = locateNeighbours(currentNode.getRowIndex() - 1, currentNode.getColIndex() - 1, Boolean.TRUE);
+            if (neighbourForLocation.isPresent()) {
+                diagonalNeighbours.add(neighbourForLocation.get());
+            }
+        }
+        //neighbour on diagonal down right
+        if (currentNode.getColIndex() - 1 >= 0 && currentNode.getRowIndex() + 1 < SearchSpaceAttributes.NUMBER_OF_ROWS) {
+            final Optional<Node> neighbourForLocation = locateNeighbours(currentNode.getRowIndex() + 1, currentNode.getColIndex() - 1, Boolean.TRUE);
+            if (neighbourForLocation.isPresent()) {
+                diagonalNeighbours.add(neighbourForLocation.get());
+            }
+        }
+        return diagonalNeighbours;
     }
 }

@@ -3,22 +3,21 @@ package astar.algorithm;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Queue;
 
 public class NodeNeighbourLocator {
     private final Node currentNode;
-    private final List<Node> nodesAlreadyTraversed;
-    private final Queue<Node> toTraverse;
+    private final List<Node> alreadyVisitedNodes;
+    private final List<Node> toTraverse;
 
-    public NodeNeighbourLocator(Node currentNode, List<Node> nodesAlreadyTraversed, Queue<Node> toTraverse) {
+    public NodeNeighbourLocator(Node currentNode, List<Node> alreadyVisitedNodes, List<Node> toTraverse) {
         this.currentNode = currentNode;
-        this.nodesAlreadyTraversed = nodesAlreadyTraversed;
+        this.alreadyVisitedNodes = alreadyVisitedNodes;
         this.toTraverse = toTraverse;
     }
 
     private Optional<Node> getNeighbourForLocation(int rowIndex, int columnIndex, boolean diagonal) {
         final Node neighbour = new Node(rowIndex, columnIndex, diagonal);
-        if (SearchSpaceAttributes.nodeIsNotBlocked(rowIndex, columnIndex) && !nodesAlreadyTraversed.contains(neighbour) && !toTraverse.contains(neighbour)) {
+        if (SearchSpaceAttributes.nodeIsNotBlocked(rowIndex, columnIndex) && !alreadyVisitedNodes.contains(neighbour) && !toTraverse.contains(neighbour)) {
             if (diagonal) {
                 neighbour.setGx(currentNode.getGx() + SearchSpaceAttributes.DIAGONAL_MOVE_COST);
                 neighbour.setHx(new Heuristics().manhattanHeuristics(neighbour, SearchSpaceAttributes.GOAL_NODE) * SearchSpaceAttributes.DIAGONAL_MOVE_COST);

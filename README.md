@@ -1,6 +1,7 @@
 # algorithms-part-one
 
-## A Star Algorithm
+## Path Finding Algorithm
+### AStar Algorithm
 
 ## Local Search Algorithms
 

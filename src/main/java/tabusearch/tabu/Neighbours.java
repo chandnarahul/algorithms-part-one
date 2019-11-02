@@ -4,20 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Neighbours {
+class Neighbours {
     private final int rowIndex;
     private final int columnIndex;
     private final Element[][] elementsMap;
     private VisitedElementList visitedElementList;
 
-    public Neighbours(VisitedElementList visitedElementList, Element[][] elementsMap, Element element) {
+    Neighbours(VisitedElementList visitedElementList, Element[][] elementsMap, Element element) {
         this.visitedElementList = visitedElementList;
         this.elementsMap = elementsMap;
         this.rowIndex = element.getRowIndex();
         this.columnIndex = element.getColumnIndex();
     }
 
-    public Element bestNeighbour() {
+    Element bestNeighbour() {
         // find all neighbours
         // ignore the ones in visited elements list
         // find and return the one with smallest z value

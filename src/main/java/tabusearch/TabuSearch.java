@@ -1,11 +1,9 @@
 package tabusearch;
 
-import tabusearch.tabu.Constants;
+import tabusearch.tabu.Search;
 
 public class TabuSearch {
-    public void search() {
-        for (int iterations = 0; iterations < Constants.NUMBER_OF_ITERATIONS.value; iterations++) {
-
-        }
+    public static void main(String[] args) {
+        System.out.println(new Search().solve());
     }
 }

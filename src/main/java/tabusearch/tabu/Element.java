@@ -1,17 +1,22 @@
 package tabusearch.tabu;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Element {
+    private int rowIndex;
+    private int columnIndex;
     private double x;
     private double y;
     private double z;
 
-
-    public Element(double x, double y) {
+    Element(double x, double y, int rowIndex, int columnIndex) {
         this.x = x;
         this.y = y;
         this.z = Constants.costFunction(x, y);
+        this.rowIndex = rowIndex;
+        this.columnIndex = columnIndex;
     }
 
     @Override
@@ -28,7 +33,26 @@ public class Element {
         return Objects.hash(x, y);
     }
 
-    public double z() {
+    double z() {
         return z;
+    }
+
+    int getRowIndex() {
+        return rowIndex;
+    }
+
+    int getColumnIndex() {
+        return columnIndex;
+    }
+
+    @Override
+    public String toString() {
+        return "Element{" +
+                "rowIndex=" + rowIndex +
+                ", columnIndex=" + columnIndex +
+                ", x=" + x +
+                ", y=" + y +
+                ", z=" + z +
+                '}';
     }
 }

@@ -1,22 +1,20 @@
 package tabusearch.tabu;
 
-import astar.algorithm.Heuristics;
-import astar.algorithm.Node;
-import astar.algorithm.SearchSpaceAttributes;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class Neighbours {
-    private final VisitedElementList visitedElements;
-    private final int x;
-    private final int y;
+    private final int rowIndex;
+    private final int columnIndex;
+    private final Element[][] elementsMap;
+    private VisitedElementList visitedElementList;
 
-    public Neighbours(VisitedElementList visitedElements, int x, int y) {
-        this.visitedElements = visitedElements;
-        this.x = x;
-        this.y = y;
+    public Neighbours(VisitedElementList visitedElementList, Element[][] elementsMap, Element element) {
+        this.visitedElementList = visitedElementList;
+        this.elementsMap = elementsMap;
+        this.rowIndex = element.getRowIndex();
+        this.columnIndex = element.getColumnIndex();
     }
 
     public Element bestNeighbour() {
@@ -31,7 +29,7 @@ public class Neighbours {
         //if all the neighbouring states are tabu states
         // then we are going to return the middle state and traverse from there
         if (pendingTraversalNeighbours.isEmpty()) {
-            return new Element(Constants.NUMBER_OF_VALUES.value, Constants.NUMBER_OF_VALUES.value);
+            return elementsMap[Constants.NUMBER_OF_VALUES.value][Constants.NUMBER_OF_VALUES.value];
         } else {
             pendingTraversalNeighbours.sort(new TabuMinimumElementComparator());
             //get the minimum element which will be the first one after sorting the list
@@ -39,7 +37,7 @@ public class Neighbours {
         }
     }
 
-    public List<Element> getPendingTraversalNeighbours() {
+    private List<Element> getPendingTraversalNeighbours() {
         List<Element> neighbours = new ArrayList<>();
         neighbours.addAll(getHorizontalVerticalNeighbours());
         neighbours.addAll(getDiagonalNeighbours());
@@ -49,35 +47,27 @@ public class Neighbours {
     private List<Element> getHorizontalVerticalNeighbours() {
         List<Element> neighbours = new ArrayList<>();
         //neighbour up
-        if (y - 1 >= 0) {
-            final Optional<Element> neighbourForLocation = locateNeighbours(y - 1, x);
-            if (neighbourForLocation.isPresent()) {
-                neighbours.add(neighbourForLocation.get());
-            }
+        if (rowIndex - 1 >= 0) {
+            final Optional<Element> element = locateNeighbourAt(rowIndex - 1, columnIndex);
+            element.ifPresent(neighbours::add);
         }
 
         //neighbour down
-        if (y + 1 < Constants.NUMBER_OF_VALUES.value) {
-            final Optional<Element> neighbourForLocation = locateNeighbours(y + 1, x);
-            if (neighbourForLocation.isPresent()) {
-                neighbours.add(neighbourForLocation.get());
-            }
+        if (rowIndex + 1 < Constants.NUMBER_OF_VALUES.value) {
+            final Optional<Element> element = locateNeighbourAt(rowIndex + 1, columnIndex);
+            element.ifPresent(neighbours::add);
         }
 
         //neighbour on left
-        if (x - 1 >= 0) {
-            final Optional<Element> neighbourForLocation = locateNeighbours(y, x - 1);
-            if (neighbourForLocation.isPresent()) {
-                neighbours.add(neighbourForLocation.get());
-            }
+        if (columnIndex - 1 >= 0) {
+            final Optional<Element> element = locateNeighbourAt(rowIndex, columnIndex - 1);
+            element.ifPresent(neighbours::add);
         }
 
         //neighbour on right
-        if (x + 1 < Constants.NUMBER_OF_VALUES.value) {
-            final Optional<Element> neighbourForLocation = locateNeighbours(y, x + 1);
-            if (neighbourForLocation.isPresent()) {
-                neighbours.add(neighbourForLocation.get());
-            }
+        if (columnIndex + 1 < Constants.NUMBER_OF_VALUES.value) {
+            final Optional<Element> element = locateNeighbourAt(rowIndex, columnIndex + 1);
+            element.ifPresent(neighbours::add);
         }
         return neighbours;
     }
@@ -90,49 +80,42 @@ public class Neighbours {
     }
 
     private List<Element> getLeftDiagonals() {
-        List<Element> diagonalNeighbours = new ArrayList<>();
+        List<Element> neighbours = new ArrayList<>();
         //neighbour on diagonal up left
-        if (x + 1 < Constants.NUMBER_OF_VALUES.value && y - 1 >= 0) {
-            final Optional<Element> neighbourForLocation = locateNeighbours(y - 1, x + 1);
-            if (neighbourForLocation.isPresent()) {
-                diagonalNeighbours.add(neighbourForLocation.get());
-            }
+        if (columnIndex + 1 < Constants.NUMBER_OF_VALUES.value && rowIndex - 1 >= 0) {
+            final Optional<Element> element = locateNeighbourAt(rowIndex - 1, columnIndex + 1);
+            element.ifPresent(neighbours::add);
         }
         //neighbour on diagonal down left
-        if (x + 1 < Constants.NUMBER_OF_VALUES.value && y + 1 < Constants.NUMBER_OF_VALUES.value) {
-            final Optional<Element> neighbourForLocation = locateNeighbours(y + 1, x + 1);
-            if (neighbourForLocation.isPresent()) {
-                diagonalNeighbours.add(neighbourForLocation.get());
-            }
+        if (columnIndex + 1 < Constants.NUMBER_OF_VALUES.value && rowIndex + 1 < Constants.NUMBER_OF_VALUES.value) {
+            final Optional<Element> element = locateNeighbourAt(rowIndex + 1, columnIndex + 1);
+            element.ifPresent(neighbours::add);
         }
-        return diagonalNeighbours;
+        return neighbours;
     }
 
     private List<Element> getRightDiagonals() {
-        List<Element> diagonalNeighbours = new ArrayList<>();
+        List<Element> neighbours = new ArrayList<>();
         //neighbour on diagonal up right
-        if (x - 1 >= 0 && y - 1 >= 0) {
-            final Optional<Element> neighbourForLocation = locateNeighbours(y - 1, x - 1);
-            if (neighbourForLocation.isPresent()) {
-                diagonalNeighbours.add(neighbourForLocation.get());
-            }
+        if (columnIndex - 1 >= 0 && rowIndex - 1 >= 0) {
+            final Optional<Element> element = locateNeighbourAt(rowIndex - 1, columnIndex - 1);
+            element.ifPresent(neighbours::add);
         }
         //neighbour on diagonal down right
-        if (x - 1 >= 0 && y + 1 < Constants.NUMBER_OF_VALUES.value) {
-            final Optional<Element> neighbourForLocation = locateNeighbours(y + 1, x - 1);
-            if (neighbourForLocation.isPresent()) {
-                diagonalNeighbours.add(neighbourForLocation.get());
-            }
+        if (columnIndex - 1 >= 0 && rowIndex + 1 < Constants.NUMBER_OF_VALUES.value) {
+            final Optional<Element> element = locateNeighbourAt(rowIndex + 1, columnIndex - 1);
+            element.ifPresent(neighbours::add);
         }
-        return diagonalNeighbours;
+        return neighbours;
     }
 
-    private Optional<Element> locateNeighbours(int rowIndex, int columnIndex) {
-        final Element element = new Element(x, y);
-        if (SearchSpaceAttributes.nodeIsNotBlocked(rowIndex, columnIndex) && !visitedElements.contains(element)) {
-            return Optional.of(element);
-        } else {
+    private Optional<Element> locateNeighbourAt(int rowIndex, int columnIndex) {
+        Element element = elementsMap[rowIndex][columnIndex];
+        if (visitedElementList.contains(element)) {
             return Optional.empty();
+        } else {
+            return Optional.of(element);
         }
     }
+
 }

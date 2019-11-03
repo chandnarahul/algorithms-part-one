@@ -1,4 +1,4 @@
-package astar.algorithm;
+package graphsearch.astar.algorithm;
 
 public class NodeComparator implements java.util.Comparator<Node> {
     public int compare(Node node1, Node node2) {

@@ -1,4 +1,4 @@
-package astar.algorithm;
+package graphsearch.astar.algorithm;
 
 public class Node {
     private int gx = 0;

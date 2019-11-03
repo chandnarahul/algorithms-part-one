@@ -1,4 +1,4 @@
-package astar.algorithm;
+package graphsearch.astar.algorithm;
 
 import java.util.ArrayList;
 import java.util.List;

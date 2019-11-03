@@ -1,4 +1,4 @@
-package localsearch;
+package basicsearch;
 
 public class HillClimbing {
     private static final double START_X = -2;

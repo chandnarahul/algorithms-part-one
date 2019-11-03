@@ -1,4 +1,4 @@
-package localsearch;
+package basicsearch;
 
 import java.util.concurrent.ThreadLocalRandom;
 

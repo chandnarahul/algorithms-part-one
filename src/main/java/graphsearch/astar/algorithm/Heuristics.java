@@ -1,4 +1,4 @@
-package astar.algorithm;
+package graphsearch.astar.algorithm;
 
 public class Heuristics {
     public int manhattanHeuristics(Node currentNode, Node finalNode) {

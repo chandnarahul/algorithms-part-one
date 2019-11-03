@@ -1,8 +1,8 @@
-package astar;
+package graphsearch.astar;
 
-import astar.algorithm.AStarAlgorithm;
-import astar.algorithm.Node;
-import astar.algorithm.SearchSpaceAttributes;
+import graphsearch.astar.algorithm.AStarAlgorithm;
+import graphsearch.astar.algorithm.Node;
+import graphsearch.astar.algorithm.SearchSpaceAttributes;
 
 import java.util.Optional;
 

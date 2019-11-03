@@ -1,4 +1,4 @@
-package localsearch;
+package basicsearch;
 
 public class BruteForceSearch {
     private static final double START_X = -1;

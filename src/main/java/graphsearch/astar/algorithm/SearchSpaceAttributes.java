@@ -1,4 +1,4 @@
-package astar.algorithm;
+package graphsearch.astar.algorithm;
 
 public class SearchSpaceAttributes {
     public static final int NUMBER_OF_ROWS = 5;

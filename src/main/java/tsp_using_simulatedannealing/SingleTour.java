@@ -33,20 +33,29 @@ public class SingleTour {
 
     public double getDistance() {
         if (distance == 0) {
-            double tourDistance = 0;
-            for (int cityIndex = 0; cityIndex < getTourSize(); cityIndex++) {
-                City fromCity = getCity(cityIndex);
-                City destinationCity;
-                if (cityIndex + 1 < getTourSize()) {
-                    destinationCity = getCity(cityIndex + 1);
-                } else {
-                    destinationCity = getCity(0);
-                }
-                tourDistance += fromCity.distanceTo(destinationCity);
-            }
-            distance = tourDistance;
+            return distance = calculateRandomTourDistance();
+        } else {
+            return distance;
         }
-        return distance;
+    }
+
+    private double calculateRandomTourDistance() {
+        double tourDistance = 0;
+        for (int cityIndex = 0; cityIndex < getTourSize() - 1; cityIndex++) {
+            City fromCity = getCity(cityIndex);
+            if (isNotLastCity(cityIndex)) {
+                City nextCity = getCity(cityIndex + 1);
+                tourDistance += fromCity.distanceTo(nextCity);
+            } else {
+                City firstCity = getCity(0);
+                tourDistance += fromCity.distanceTo(firstCity);
+            }
+        }
+        return tourDistance;
+    }
+
+    private boolean isNotLastCity(int cityIndex) {
+        return cityIndex + 1 < getTourSize();
     }
 
     @Override

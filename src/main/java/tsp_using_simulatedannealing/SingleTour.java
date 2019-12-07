@@ -42,13 +42,14 @@ public class SingleTour {
     private double calculateRandomTourDistance() {
         double tourDistance = 0;
         for (int cityIndex = 0; cityIndex < getTourSize() - 1; cityIndex++) {
-            City fromCity = getCity(cityIndex);
             if (isNotLastCity(cityIndex)) {
+                City fromCity = getCity(cityIndex);
                 City nextCity = getCity(cityIndex + 1);
                 tourDistance += fromCity.distanceTo(nextCity);
             } else {
                 City firstCity = getCity(0);
-                tourDistance += fromCity.distanceTo(firstCity);
+                City lastCity = getCity(cityIndex);
+                tourDistance += lastCity.distanceTo(firstCity);
             }
         }
         return tourDistance;

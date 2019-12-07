@@ -1,24 +1,20 @@
 package tsp_using_simulatedannealing;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Repository {
-    private static List<City> cityList = new ArrayList<>();
+    private static final List<City> cityList = new ArrayList<>();
 
-    public static void addCity(City city) {
-        cityList.add(city);
-    }
-
-    public static City getCity(int index) {
-        return cityList.get(index);
-    }
-
-    public static int size() {
-        return cityList.size();
+    public static void addRandomCitiesUpTo(int numberOfCities) {
+        for (int i = 0; i < numberOfCities; i++) {
+            cityList.add(new City());
+        }
     }
 
     public static List<City> getCityList() {
+        Collections.shuffle(cityList);
         return cityList;
     }
 }

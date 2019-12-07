@@ -1,7 +1,6 @@
 package tsp_using_simulatedannealing;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class SingleTour {
@@ -22,7 +21,6 @@ public class SingleTour {
 
     private void generateTour() {
         tour.addAll(Repository.getCityList());
-        Collections.shuffle(tour);
     }
 
     public City getCity(int index) {

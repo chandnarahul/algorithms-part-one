@@ -6,7 +6,7 @@ public class App {
         SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing();
         simulatedAnnealing.simulation();
 
-        System.out.println("Final approximated solution distance is " + simulatedAnnealing.getBest().getDistance());
-        System.out.println("Final approximated solution distance is " + simulatedAnnealing.getBest());
+        System.out.println("Final approximated solution distance is " + simulatedAnnealing.getBestSolution().getDistance());
+        System.out.println("Final approximated solution distance is " + simulatedAnnealing.getBestSolution());
     }
 }

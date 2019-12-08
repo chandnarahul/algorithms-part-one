@@ -2,21 +2,21 @@ package tsp_using_simulatedannealing;
 
 public class SimulatedAnnealing {
 
-    private SingleTour best;
+    private SingleTour bestSolution;
 
     public void simulation() {
         double temperature = 10000;
         double coolingRate = 0.003;
 
-        SingleTour currentSolution = new SingleTour();
-        System.out.println("initial solution is " + currentSolution.getDistance());
+        SingleTour initialSolution = new SingleTour();
+        System.out.println("initial solution is " + initialSolution.getDistance());
 
-        best = new SingleTour(currentSolution.getTour());
+        bestSolution = new SingleTour(initialSolution.getTour());
 
         while (temperature > 1) {
             temperature = temperature - coolingRate;
 
-            SingleTour newSolution = new SingleTour(currentSolution.getTour());
+            SingleTour newSolution = new SingleTour(initialSolution.getTour());
             int randomIndex1 = (int) (newSolution.tourSize() * Math.random());
             City city1 = newSolution.getCity(randomIndex1);
 
@@ -26,27 +26,31 @@ public class SimulatedAnnealing {
             newSolution.setCity(randomIndex2, city1);
             newSolution.setCity(randomIndex1, city2);
 
-            double currentEnergy = currentSolution.getDistance();
-            double neighbourEnergy = newSolution.getDistance();
+            double currentEnergy = initialSolution.getDistance();
+            double newSolutionEnergy = newSolution.getDistance();
 
-            if (acceptanceProbability(currentEnergy, neighbourEnergy, temperature) > Math.random()) {
-                currentSolution = new SingleTour(newSolution.getTour());
+            if (acceptanceProbability(currentEnergy, newSolutionEnergy, temperature) > Math.random()) {
+                initialSolution = new SingleTour(newSolution.getTour());
             }
-            if (currentSolution.getDistance() < best.getDistance()) {
-                best = new SingleTour(currentSolution.getTour());
+            if (bestSolutionIsLessEffectiveThan(newSolution)) {
+                bestSolution = new SingleTour(newSolution.getTour());
             }
         }
     }
 
-    private double acceptanceProbability(double currentEnergy, double neighbourEnergy, double temperature) {
-        if (neighbourEnergy < currentEnergy) {
+    private boolean bestSolutionIsLessEffectiveThan(SingleTour newSolution) {
+        return newSolution.getDistance() < bestSolution.getDistance();
+    }
+
+    private double acceptanceProbability(double currentEnergy, double newSolutionEnergy, double temperature) {
+        if (newSolutionEnergy < currentEnergy) {
             return 1;
         } else {
-            return Math.exp((currentEnergy - neighbourEnergy) / temperature);
+            return Math.exp((currentEnergy - newSolutionEnergy) / temperature);
         }
     }
 
-    public SingleTour getBest() {
-        return best;
+    public SingleTour getBestSolution() {
+        return bestSolution;
     }
 }

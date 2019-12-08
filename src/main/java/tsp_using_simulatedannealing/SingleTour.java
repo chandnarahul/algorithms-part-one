@@ -47,6 +47,10 @@ public class SingleTour {
         }
     }
 
+    public void resetDistance() {
+        this.distance = 0;
+    }
+
     private double calculateGeneratedTourDistance() {
         double tourDistance = 0;
         for (int cityIndex = 0; cityIndex < tourSize(); cityIndex++) {

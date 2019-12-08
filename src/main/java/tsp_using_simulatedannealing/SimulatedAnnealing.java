@@ -16,8 +16,7 @@ public class SimulatedAnnealing {
         while (temperature > 1) {
             temperature = temperature - coolingRate;
 
-            SingleTour newSolution = new SingleTour(initialSolution);
-            newSolution.randomlySwapCities();
+            SingleTour newSolution = new SingleTour(initialSolution).randomlySwapCities();
 
             double currentEnergy = initialSolution.getDistance();
             double newSolutionEnergy = newSolution.getDistance();

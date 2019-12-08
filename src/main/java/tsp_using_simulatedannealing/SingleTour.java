@@ -75,7 +75,7 @@ public class SingleTour {
         this.tour.set(randomIndex, city);
     }
 
-    public void randomlySwapCities() {
+    public SingleTour randomlySwapCities() {
         int randomIndex1 = (int) (tourSize() * Math.random());
         City city1 = getCity(randomIndex1);
 
@@ -84,5 +84,7 @@ public class SingleTour {
 
         setCity(randomIndex2, city1);
         setCity(randomIndex1, city2);
+
+        return this;
     }
 }

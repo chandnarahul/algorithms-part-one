@@ -11,19 +11,15 @@ public class SingleTour {
         generateTour();
     }
 
-    public SingleTour(List<City> tour) {
-        this.tour.addAll(tour);
-    }
-
-    public List<City> getTour() {
-        return tour;
+    public SingleTour(SingleTour singleTour) {
+        this.tour.addAll(singleTour.tour);
     }
 
     private void generateTour() {
         tour.addAll(Repository.getCityList());
     }
 
-    public City getCity(int index) {
+    private City getCity(int index) {
         return tour.get(index);
     }
 
@@ -47,10 +43,6 @@ public class SingleTour {
         }
     }
 
-    public void resetDistance() {
-        this.distance = 0;
-    }
-
     private double calculateGeneratedTourDistance() {
         double tourDistance = 0;
         for (int cityIndex = 0; cityIndex < tourSize(); cityIndex++) {
@@ -67,7 +59,7 @@ public class SingleTour {
         return cityIndex + 1 == tourSize();
     }
 
-    public int tourSize() {
+    private int tourSize() {
         return tour.size();
     }
 
@@ -79,7 +71,7 @@ public class SingleTour {
                 '}';
     }
 
-    public void setCity(int randomIndex, City city) {
+    private void setCity(int randomIndex, City city) {
         this.tour.set(randomIndex, city);
     }
 

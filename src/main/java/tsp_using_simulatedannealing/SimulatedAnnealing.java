@@ -11,22 +11,22 @@ public class SimulatedAnnealing {
         SingleTour initialSolution = new SingleTour();
         System.out.println("initial solution is " + initialSolution.getDistance());
 
-        bestSolution = new SingleTour(initialSolution.getTour());
+        bestSolution = new SingleTour(initialSolution);
 
         while (temperature > 1) {
             temperature = temperature - coolingRate;
 
-            SingleTour newSolution = new SingleTour(initialSolution.getTour());
+            SingleTour newSolution = new SingleTour(initialSolution);
             newSolution.randomlySwapCities();
 
             double currentEnergy = initialSolution.getDistance();
             double newSolutionEnergy = newSolution.getDistance();
 
             if (newSolutionEnergyProbabilityIsHigherThanCurrentSolutionEnergy(newSolutionEnergy, currentEnergy, temperature)) {
-                initialSolution = new SingleTour(newSolution.getTour());
+                initialSolution = new SingleTour(newSolution);
             }
             if (bestSolutionIsLessEffectiveThan(newSolution)) {
-                bestSolution = new SingleTour(newSolution.getTour());
+                bestSolution = new SingleTour(newSolution);
             }
         }
     }

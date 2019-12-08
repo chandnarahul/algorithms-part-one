@@ -22,7 +22,7 @@ public class SimulatedAnnealing {
             double currentEnergy = initialSolution.getDistance();
             double newSolutionEnergy = newSolution.getDistance();
 
-            if (acceptanceProbability(currentEnergy, newSolutionEnergy, temperature) > Math.random()) {
+            if (newSolutionEnergyProbabilityIsHigherThanCurrentSolutionEnergy(currentEnergy, newSolutionEnergy, temperature)) {
                 initialSolution = new SingleTour(newSolution.getTour());
             }
             if (bestSolutionIsLessEffectiveThan(newSolution)) {
@@ -35,11 +35,11 @@ public class SimulatedAnnealing {
         return newSolution.getDistance() < bestSolution.getDistance();
     }
 
-    private double acceptanceProbability(double currentEnergy, double newSolutionEnergy, double temperature) {
+    private boolean newSolutionEnergyProbabilityIsHigherThanCurrentSolutionEnergy(double currentEnergy, double newSolutionEnergy, double temperature) {
         if (newSolutionEnergy < currentEnergy) {
-            return 1;
+            return Boolean.TRUE;
         } else {
-            return Math.exp((currentEnergy - newSolutionEnergy) / temperature);
+            return Math.exp((currentEnergy - newSolutionEnergy) / temperature) > Math.random();
         }
     }
 

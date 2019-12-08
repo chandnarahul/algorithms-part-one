@@ -17,10 +17,10 @@ public class SimulatedAnnealing {
             temperature = temperature - coolingRate;
 
             SingleTour newSolution = new SingleTour(currentSolution.getTour());
-            int randomIndex1 = (int) (newSolution.getTourSize() * Math.random());
+            int randomIndex1 = (int) (newSolution.tourSize() * Math.random());
             City city1 = newSolution.getCity(randomIndex1);
 
-            int randomIndex2 = (int) (newSolution.getTourSize() * Math.random());
+            int randomIndex2 = (int) (newSolution.tourSize() * Math.random());
             City city2 = newSolution.getCity(randomIndex2);
 
             newSolution.setCity(randomIndex2, city1);

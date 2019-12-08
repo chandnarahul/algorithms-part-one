@@ -23,7 +23,7 @@ public class SingleTour {
         tour.addAll(Repository.getCityList());
     }
 
-    private City getCity(int index) {
+    public City getCity(int index) {
         return tour.get(index);
     }
 
@@ -36,7 +36,7 @@ public class SingleTour {
     }
 
     private City lastCity() {
-        return tour.get(tour.size() - 1);
+        return tour.get(tourSize() - 1);
     }
 
     public double getDistance() {
@@ -49,7 +49,7 @@ public class SingleTour {
 
     private double calculateGeneratedTourDistance() {
         double tourDistance = 0;
-        for (int cityIndex = 0; cityIndex < tour.size(); cityIndex++) {
+        for (int cityIndex = 0; cityIndex < tourSize(); cityIndex++) {
             if (isLastCity(cityIndex)) {
                 tourDistance += lastCity().distanceTo(firstCity());
             } else {
@@ -60,7 +60,11 @@ public class SingleTour {
     }
 
     private boolean isLastCity(int cityIndex) {
-        return cityIndex + 1 == tour.size();
+        return cityIndex + 1 == tourSize();
+    }
+
+    public int tourSize() {
+        return tour.size();
     }
 
     @Override

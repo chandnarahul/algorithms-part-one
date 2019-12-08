@@ -41,13 +41,13 @@ public class SingleTour {
 
     public double getDistance() {
         if (distance == 0) {
-            return distance = calculateRandomTourDistance();
+            return distance = calculateGeneratedTourDistance();
         } else {
             return distance;
         }
     }
 
-    private double calculateRandomTourDistance() {
+    private double calculateGeneratedTourDistance() {
         double tourDistance = 0;
         for (int cityIndex = 0; cityIndex < tour.size(); cityIndex++) {
             if (isLastCity(cityIndex)) {

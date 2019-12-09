@@ -13,7 +13,7 @@ public class Repository {
         }
     }
 
-    public static List<City> getCityList() {
+    public static List<City> getShuffledCityList() {
         Collections.shuffle(cityList);
         return cityList;
     }

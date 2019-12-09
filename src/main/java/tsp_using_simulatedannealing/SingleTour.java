@@ -16,7 +16,7 @@ public class SingleTour {
     }
 
     private void generateTour() {
-        tour.addAll(Repository.getCityList());
+        tour.addAll(Repository.getShuffledCityList());
     }
 
     private City getCity(int index) {

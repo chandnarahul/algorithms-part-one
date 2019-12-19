@@ -14,3 +14,5 @@
 ## Simulated Annealing
 
 ## Solving Traveling Sales Man Problem Using Simulated Annealing
+
+## Genetic Algorithm

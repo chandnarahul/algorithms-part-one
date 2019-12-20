@@ -27,7 +27,7 @@ public class GeneticAlgorithm {
     private void mutate(Individual individual) {
         for (int i = 0; i < Constant.CHROMOSOME_LENGTH; i++) {
             if (Math.random() < Constant.MUTATION_RATE) {
-                int gene = randomGenerator.nextInt(Constant.CHROMOSOME_LENGTH);
+                int gene = randomGenerator.nextInt(Constant.MAX_NUMBER);
                 individual.setGene(i, gene);
             }
         }

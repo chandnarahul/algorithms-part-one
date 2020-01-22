@@ -39,7 +39,11 @@ public class Individual {
     public String toString() {
         return "Individual{" +
                 "genes=" + Arrays.toString(genes) +
-                ", fitness=" + fitness +
+                ", fitness=" + getFitnessPercentage() +
                 '}';
+    }
+
+    public String getFitnessPercentage() {
+        return ((fitness / Constant.SOLUTION_SEQUENCE.length) * 100) + "%%";
     }
 }

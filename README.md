@@ -16,3 +16,5 @@
 ## Solving Traveling Sales Man Problem Using Simulated Annealing
 
 ## Genetic Algorithm
+
+## Genetic Algorithm : Finding minima of a function

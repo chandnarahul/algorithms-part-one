@@ -1,4 +1,4 @@
-# algorithms-part-one
+# intro to game algorithms part one
 
 ## Path Finding Algorithm
 ### AStar Algorithm

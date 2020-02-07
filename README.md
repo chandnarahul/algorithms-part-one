@@ -1,4 +1,4 @@
-# intro to game algorithms part one
+# intro to game algorithms part one (Rough Experiments)
 
 ## Path Finding Algorithm
 ### AStar Algorithm

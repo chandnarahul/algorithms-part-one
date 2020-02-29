@@ -14,14 +14,16 @@ public class SimpleGAPopulation {
         for (int i = 0; i < POPULATION_SIZE; i++) {
             simpleGAIndividuals.add(new SimpleGAIndividual());
         }
+        sortByFittestIndividual();
         recalculatePopulationFitness();
     }
 
     public void updateIndividualAt(int location, SimpleGAIndividual toIndividual) {
         simpleGAIndividuals.set(location, toIndividual);
+        sortByFittestIndividual();
     }
 
-    private SimpleGAIndividual fittestIndividual(int location) {
+    private void sortByFittestIndividual() {
         simpleGAIndividuals.sort((i1, i2) -> {
             if (i1.getFitnessScore() > i2.getFitnessScore()) {
                 return -1;
@@ -31,7 +33,6 @@ public class SimpleGAPopulation {
                 return 0;
             }
         });
-        return simpleGAIndividuals.get(location);
     }
 
     public void recalculatePopulationFitness() {
@@ -45,7 +46,7 @@ public class SimpleGAPopulation {
     }
 
     public SimpleGAIndividual individual(int location) {
-        return fittestIndividual(location);
+        return simpleGAIndividuals.get(location);
     }
 
     public SimpleGAIndividual individualThatMatchesFitness(int nextInt) {
@@ -57,7 +58,7 @@ public class SimpleGAPopulation {
     }
 
     public SimpleGAIndividual fittestIndividual() {
-        return fittestIndividual(0);
+        return simpleGAIndividuals.get(0);
     }
 
 }

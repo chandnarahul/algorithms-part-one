@@ -36,9 +36,7 @@ public class SimpleGAPopulation {
     }
 
     public void recalculatePopulationFitness() {
-        for (SimpleGAIndividual individual : simpleGAIndividuals) {
-            this.totalPopulationFitnessScore += individual.getFitnessScore();
-        }
+        simpleGAIndividuals.forEach(individual -> this.totalPopulationFitnessScore = +individual.getFitnessScore());
     }
 
     public int getTotalPopulationFitnessScore() {

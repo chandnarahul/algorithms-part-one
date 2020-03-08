@@ -10,10 +10,11 @@ public class TuneRobotSensorsGAIndividual {
     private Set<MaizeNode> visitedNodes = new HashSet<>();
 
     public TuneRobotSensorsGAIndividual() {
-        System.out.println("******************");
-        System.out.println("New Individual");
-        System.out.println("******************");
-
+        if (TuneRobotSensorsGAConstants.DEBUG) {
+            System.out.println("******************");
+            System.out.println("New Individual");
+            System.out.println("******************");
+        }
         for (int i = 0; i < TuneRobotSensorsGAConstants.CHROMOSOME_LENGTH; i++) {
             chromosome[i] = RobotMovement.randomMovement();
         }
@@ -25,23 +26,26 @@ public class TuneRobotSensorsGAIndividual {
     }
 
     public void calculateFitnessScore() {
-        System.out.println("Entering calculateFitnessScore");
+        if (TuneRobotSensorsGAConstants.DEBUG) {
+            System.out.println("Entering calculateFitnessScore");
+        }
+        visitedNodes.clear();
         int i = 0, j = 0;
         for (; i < TuneRobotSensorsGAConstants.NUMBER_OF_ROWS_IN_MAIZE; ) {
             for (; j < TuneRobotSensorsGAConstants.NUMBER_OF_COLUMNS_IN_MAIZE; ) {
                 final MaizeNode maizeNode = new MaizeNode(i, j);
-                System.out.println(maizeNode + " " + this);
-                if (visitedNodes.size() == TuneRobotSensorsGAConstants.TOTAL_NUMBER_OF_STEPS) {
-                    return;
+                if (TuneRobotSensorsGAConstants.DEBUG) {
+                    System.out.println(maizeNode + " " + this);
                 }
                 if (visitedNodes.size() == TuneRobotSensorsGAConstants.TOTAL_NUMBER_OF_STEPS) {
                     return;
                 }
                 final MaizeNode nextStep = getNodeFromChromosomeBasedOnSensorValueAt(maizeNode);
-                visitedNodes.add(nextStep);
-                if (TuneRobotSensorsGAConstants.isWallFree(nextStep) && !visitedNodes.contains(nextStep) && nextStep != null) {
+                if (TuneRobotSensorsGAConstants.isWallFree(nextStep)) {
                     i = nextStep.getRowIndex();
                     j = nextStep.getColIndex();
+                    visitedNodes.add(maizeNode);
+                    visitedNodes.add(nextStep);
                     break;
                 } else {
                     return;

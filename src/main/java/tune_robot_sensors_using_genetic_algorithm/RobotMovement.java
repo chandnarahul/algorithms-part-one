@@ -21,11 +21,15 @@ public enum RobotMovement {
     }
 
     public static RobotMovement randomMovementExcept(RobotMovement robotMovement) {
-        RobotMovement newMovement = randomMovement();
-        while (newMovement.location == robotMovement.location) {
-            newMovement = randomMovement();
+        int location = robotMovement.location;
+        if (location == 0 || location == 1) {
+            return fromLocation(location == 1 ? 0 : 1);
+        } else {
+            String str = Integer.toBinaryString(location);
+            str = "" + ((str.charAt(0) - 48) == 0 ? 1 : 0) +((str.charAt(1) - 48) == 0 ? 1 : 0);
+            location = Integer.parseInt(str, 2);
         }
-        return newMovement;
+        return fromLocation(location);
     }
 
     public static RobotMovement fromLocation(int location) {

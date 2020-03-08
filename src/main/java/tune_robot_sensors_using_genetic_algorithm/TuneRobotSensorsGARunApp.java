@@ -5,11 +5,8 @@ public class TuneRobotSensorsGARunApp {
         TuneRobotSensorsGAGeneticAlgorithm simpleGAGeneticAlgorithm = new TuneRobotSensorsGAGeneticAlgorithm();
         int generation = 0;
         while (simpleGAGeneticAlgorithm.shouldContinueToEvaluate()) {
-            System.out.println("crossover");
             simpleGAGeneticAlgorithm.applyCrossover();
-            System.out.println("mutation");
             simpleGAGeneticAlgorithm.applyMutation();
-            System.out.println("evaluation");
             simpleGAGeneticAlgorithm.evaluatePopulation();
             System.out.println("For generation [" + generation + "] current fittest is " + simpleGAGeneticAlgorithm.getFittest() + " with fitness score of [" + simpleGAGeneticAlgorithm.getFittest().getFitnessScore() + "]");
             generation += 1;

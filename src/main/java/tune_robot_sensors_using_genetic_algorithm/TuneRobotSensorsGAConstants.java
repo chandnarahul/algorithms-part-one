@@ -10,13 +10,14 @@ public class TuneRobotSensorsGAConstants {
             {1, 1, 1, 0, 1},
             {0, 0, 0, 0, 1}
     };
+    public static boolean DEBUG = Boolean.FALSE;
     public static final int NUMBER_OF_ROWS_IN_MAIZE = MAIZE.length;
     public static final int NUMBER_OF_COLUMNS_IN_MAIZE = MAIZE[0].length;
     public static int TOTAL_NUMBER_OF_STEPS = 0;
     public static final int POPULATION_SIZE = 10;
-    public static final int NUMBER_OF_ELITE_INDIVIDUALS = 5;
+    public static final int NUMBER_OF_ELITE_INDIVIDUALS = 2;
     public static final double MUTATION_RATE = 0.001;
-    public static final double CROSSOVER_RATE = 0.75;
+    public static final double CROSSOVER_RATE = 0.95;
     public static final double NUMBER_OF_ITERATIONS = 500;
 
     static {
@@ -27,7 +28,7 @@ public class TuneRobotSensorsGAConstants {
                 }
             }
         }
-        System.out.println("TOTAL_NUMBER_OF_STEPS "+TOTAL_NUMBER_OF_STEPS);
+        System.out.println("TOTAL_NUMBER_OF_STEPS " + TOTAL_NUMBER_OF_STEPS);
     }
 
     public static boolean isWallFree(MaizeNode nextStep) {

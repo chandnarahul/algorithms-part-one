@@ -8,7 +8,6 @@ import java.util.Set;
 public class TuneRobotSensorsGAIndividual {
     private RobotMovement[] chromosome = new RobotMovement[TuneRobotSensorsGAConstants.CHROMOSOME_LENGTH];
     private Set<MaizeNode> visitedNodes = new HashSet<>();
-    private int fitnessCount = 0;
 
     public TuneRobotSensorsGAIndividual() {
         if (TuneRobotSensorsGAConstants.DEBUG) {
@@ -23,7 +22,7 @@ public class TuneRobotSensorsGAIndividual {
     }
 
     public int getFitnessScore() {
-        return fitnessCount;
+        return visitedNodes.size();
     }
 
     public void calculateFitnessScore() {
@@ -31,32 +30,22 @@ public class TuneRobotSensorsGAIndividual {
             System.out.println("Entering calculateFitnessScore");
         }
         visitedNodes.clear();
-        int j = 0;
-        for (int i = 0; i < TuneRobotSensorsGAConstants.NUMBER_OF_ROWS_IN_MAIZE; ) {
+        int i = 0, j = 0;
+        for (; i < TuneRobotSensorsGAConstants.NUMBER_OF_ROWS_IN_MAIZE; ) {
             for (; j < TuneRobotSensorsGAConstants.NUMBER_OF_COLUMNS_IN_MAIZE; ) {
                 final MaizeNode maizeNode = new MaizeNode(i, j);
-                if (i == TuneRobotSensorsGAConstants.NUMBER_OF_ROWS_IN_MAIZE - 1 && j == 0) {
+                if (TuneRobotSensorsGAConstants.DEBUG) {
+                    System.out.println(maizeNode + " " + this);
+                }
+                if (visitedNodes.size() == TuneRobotSensorsGAConstants.TOTAL_NUMBER_OF_STEPS) {
                     return;
                 }
                 final MaizeNode nextStep = getNodeFromChromosomeBasedOnSensorValueAt(maizeNode);
                 if (TuneRobotSensorsGAConstants.isWallFree(nextStep)) {
                     i = nextStep.getRowIndex();
                     j = nextStep.getColIndex();
-                    if (visitedNodes.size() == 4) {
-                        visitedNodes.clear();
-                    } else {
-                        visitedNodes.add(maizeNode);
-                        visitedNodes.add(nextStep);
-                    }
-                    if (TuneRobotSensorsGAConstants.DEBUG) {
-                        System.out.println("current step " + maizeNode + " " + this);
-                        System.out.println("next step " + nextStep + " " + this);
-                    }
-                    if (fitnessCount > TuneRobotSensorsGAConstants.TOTAL_NUMBER_OF_STEPS) {
-                        fitnessCount = 0;
-                        return;
-                    }
-                    fitnessCount += 1;
+                    visitedNodes.add(maizeNode);
+                    visitedNodes.add(nextStep);
                     break;
                 } else {
                     return;
@@ -82,7 +71,7 @@ public class TuneRobotSensorsGAIndividual {
     public String toString() {
         return "SimpleGAIndividual {" +
                 "chromosome= " + Arrays.toString(chromosome) +
-                ",fitnessCount " + fitnessCount +
+                ",visitedNodes " + visitedNodes.size() +
                 '}';
     }
 

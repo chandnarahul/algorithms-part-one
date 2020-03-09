@@ -19,8 +19,7 @@ public class TuneRobotSensorsGAGeneticAlgorithm {
 
     public boolean shouldContinueToEvaluate() {
         boolean isLessThanMaxNumberOfIterations = iterations < TuneRobotSensorsGAConstants.NUMBER_OF_ITERATIONS;
-        boolean haventFoundFittestIndividualYet = simpleGAPopulation.fittestIndividual().getFitnessScore() != TuneRobotSensorsGAConstants.TOTAL_NUMBER_OF_STEPS;
-        if (isLessThanMaxNumberOfIterations && haventFoundFittestIndividualYet) {
+        if (isLessThanMaxNumberOfIterations && !TuneRobotSensorsGAConstants.REACHED_GOAL) {
             iterations += 1;
             return Boolean.TRUE;
         } else {
@@ -44,7 +43,7 @@ public class TuneRobotSensorsGAGeneticAlgorithm {
 
     private TuneRobotSensorsGAIndividual selectGenesViaOnePointSelectionFrom(TuneRobotSensorsGAIndividual fromFirstParent, TuneRobotSensorsGAIndividual fromSecondParent) {
         TuneRobotSensorsGAIndividual simpleGAIndividual = new TuneRobotSensorsGAIndividual();
-        for (int i = 0; i < TuneRobotSensorsGAConstants.CHROMOSOME_LENGTH; i++) {
+        for (int i = 0; i < RobotMovementSensors.CHROMOSOME_LENGTH; i++) {
             if (fromFirstParent.getFitnessScore() > fromSecondParent.getFitnessScore()) {
                 simpleGAIndividual.selectGeneAt(i, fromFirstParent);
             } else {
@@ -60,7 +59,7 @@ public class TuneRobotSensorsGAGeneticAlgorithm {
         for (int i = 0; i < TuneRobotSensorsGAConstants.POPULATION_SIZE; i++) {
             TuneRobotSensorsGAIndividual simpleGAIndividual = simpleGAPopulation.individual(i);
             if (i >= TuneRobotSensorsGAConstants.NUMBER_OF_ELITE_INDIVIDUALS) {
-                for (int geneIndex = 0; geneIndex < TuneRobotSensorsGAConstants.CHROMOSOME_LENGTH; geneIndex++) {
+                for (int geneIndex = 0; geneIndex < RobotMovementSensors.CHROMOSOME_LENGTH; geneIndex++) {
                     if (TuneRobotSensorsGAConstants.MUTATION_RATE > Math.random()) {
                         simpleGAIndividual.flipGeneAt(geneIndex);
                     }

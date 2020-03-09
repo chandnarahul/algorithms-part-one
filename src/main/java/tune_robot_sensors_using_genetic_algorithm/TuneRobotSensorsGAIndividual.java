@@ -6,7 +6,7 @@ import java.util.Set;
 
 
 public class TuneRobotSensorsGAIndividual {
-    private RobotMovement[] chromosome = new RobotMovement[TuneRobotSensorsGAConstants.CHROMOSOME_LENGTH];
+    private RobotMovementSensors[] chromosome = new RobotMovementSensors[RobotMovementSensors.CHROMOSOME_LENGTH];
     private Set<MaizeNode> visitedNodes = new HashSet<>();
 
     public TuneRobotSensorsGAIndividual() {
@@ -15,8 +15,8 @@ public class TuneRobotSensorsGAIndividual {
             System.out.println("New Individual");
             System.out.println("******************");
         }
-        for (int i = 0; i < TuneRobotSensorsGAConstants.CHROMOSOME_LENGTH; i++) {
-            chromosome[i] = RobotMovement.randomMovement();
+        for (int i = 0; i < RobotMovementSensors.CHROMOSOME_LENGTH; i++) {
+            chromosome[i] = RobotMovementSensors.randomMovement();
         }
         calculateFitnessScore();
     }
@@ -34,10 +34,8 @@ public class TuneRobotSensorsGAIndividual {
         for (; i < TuneRobotSensorsGAConstants.NUMBER_OF_ROWS_IN_MAIZE; ) {
             for (; j < TuneRobotSensorsGAConstants.NUMBER_OF_COLUMNS_IN_MAIZE; ) {
                 final MaizeNode maizeNode = new MaizeNode(i, j);
-                if (TuneRobotSensorsGAConstants.DEBUG) {
-                    System.out.println(maizeNode + " " + this);
-                }
-                if (visitedNodes.size() == TuneRobotSensorsGAConstants.TOTAL_NUMBER_OF_STEPS) {
+                if (i == TuneRobotSensorsGAConstants.NUMBER_OF_COLUMNS_IN_MAIZE - 1 && j == 0) {
+                    TuneRobotSensorsGAConstants.REACHED_GOAL = Boolean.TRUE;
                     return;
                 }
                 final MaizeNode nextStep = getNodeFromChromosomeBasedOnSensorValueAt(maizeNode);
@@ -46,6 +44,11 @@ public class TuneRobotSensorsGAIndividual {
                     j = nextStep.getColIndex();
                     visitedNodes.add(maizeNode);
                     visitedNodes.add(nextStep);
+                    if (TuneRobotSensorsGAConstants.DEBUG) {
+                        System.out.println("current node " + maizeNode + " " + this);
+                        System.out.println("next node " + nextStep + " " + this);
+                        System.out.println("visited nodes " + visitedNodes + " " + visitedNodes.contains(nextStep) + " " + visitedNodes.contains(maizeNode));
+                    }
                     break;
                 } else {
                     return;
@@ -57,9 +60,17 @@ public class TuneRobotSensorsGAIndividual {
     private MaizeNode getNodeFromChromosomeBasedOnSensorValueAt(MaizeNode maizeNode) {
         final int location = Sensor.withoutObstacle(maizeNode, visitedNodes);
         if (location == -1) {
+            if (TuneRobotSensorsGAConstants.DEBUG) {
+                System.out.println("Sensor.withoutObstacle returned NULL for " + maizeNode + " " + this);
+            }
             return null;
         } else {
-            return maizeNode.getMovement(chromosome[location]);
+            final MaizeNode movement = maizeNode.getMovement(chromosome[location]);
+            if (visitedNodes.contains(movement)) {
+                return null;
+            } else {
+                return movement;
+            }
         }
     }
 
@@ -76,6 +87,6 @@ public class TuneRobotSensorsGAIndividual {
     }
 
     public void flipGeneAt(int geneIndex) {
-        chromosome[geneIndex] = RobotMovement.randomMovementExcept(chromosome[geneIndex]);
+        chromosome[geneIndex] = RobotMovementSensors.randomMovementExcept(chromosome[geneIndex]);
     }
 }

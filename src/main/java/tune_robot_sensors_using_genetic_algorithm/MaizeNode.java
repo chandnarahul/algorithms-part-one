@@ -52,18 +52,32 @@ public class MaizeNode {
         return new MaizeNode(rowIndex, colIndex + 1);
     }
 
+    public MaizeNode forwardRight() {
+        return new MaizeNode(rowIndex + 1, colIndex + 1);
+    }
+
+    public MaizeNode forwardLeft() {
+        return new MaizeNode(rowIndex + 1, colIndex - 1);
+    }
+
     public MaizeNode back() {
         return new MaizeNode(rowIndex - 1, colIndex);
     }
 
-    public MaizeNode getMovement(RobotMovement robotMovement) {
-        if (RobotMovement.FORWARD == robotMovement) {
+    public MaizeNode getMovement(RobotMovementSensors robotMovement) {
+        if (RobotMovementSensors.FORWARD == robotMovement) {
             return this.forward();
         }
-        if (RobotMovement.LEFT == robotMovement) {
+        if (RobotMovementSensors.FORWARD_RIGHT == robotMovement) {
+            return this.forwardRight();
+        }
+        if (RobotMovementSensors.FORWARD_LEFT == robotMovement) {
+            return this.forwardLeft();
+        }
+        if (RobotMovementSensors.LEFT == robotMovement) {
             return this.left();
         }
-        if (RobotMovement.RIGHT == robotMovement) {
+        if (RobotMovementSensors.RIGHT == robotMovement) {
             return this.right();
         }
         return this.back();

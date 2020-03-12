@@ -11,7 +11,9 @@ public class TuneRobotSensorsGARunApp {
             System.out.println("For generation [" + generation + "] current fittest is " + simpleGAGeneticAlgorithm.getFittest() + " with fitness score of [" + simpleGAGeneticAlgorithm.getFittest().getFitnessScore() + "]");
             generation += 1;
         }
-
-        System.out.println("Final fittest For generation [" + generation + "] " + simpleGAGeneticAlgorithm.getFittestPopulations());
+        System.out.println("Individuals in population that reached the end of maize");
+        for (TuneRobotSensorsGAIndividual tuneRobotSensorsGAIndividual : simpleGAGeneticAlgorithm.getFittestPopulations()) {
+            System.out.println(tuneRobotSensorsGAIndividual);
+        }
     }
 }

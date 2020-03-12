@@ -14,6 +14,7 @@ public class TuneRobotSensorsGAConstants {
     public static final int NUMBER_OF_COLUMNS_IN_MAIZE = MAIZE[0].length;
     public static boolean REACHED_GOAL = Boolean.FALSE;
     public static final int POPULATION_SIZE = 10;
+    public static final int TOURNAMENT_SELECTION = 10;
     public static final int NUMBER_OF_ELITE_INDIVIDUALS = 5;
     public static final double MUTATION_RATE = 0.001;
     public static final double CROSSOVER_RATE = 0.95;

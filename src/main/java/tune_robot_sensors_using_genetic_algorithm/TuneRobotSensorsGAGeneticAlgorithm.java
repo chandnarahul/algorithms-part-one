@@ -30,7 +30,7 @@ public class TuneRobotSensorsGAGeneticAlgorithm {
     public void applyCrossover() {
         TuneRobotSensorsGAPopulation crossOveredSimpleGAPopulation = new TuneRobotSensorsGAPopulation();
         for (int i = 0; i < TuneRobotSensorsGAConstants.POPULATION_SIZE; i++) {
-            TuneRobotSensorsGAIndividual firstParent = crossOveredSimpleGAPopulation.individual(i);
+            TuneRobotSensorsGAIndividual firstParent = selectParentViaTournamentSelection(this.simpleGAPopulation);
             if (TuneRobotSensorsGAConstants.CROSSOVER_RATE > Math.random() && i >= TuneRobotSensorsGAConstants.NUMBER_OF_ELITE_INDIVIDUALS) {
                 TuneRobotSensorsGAIndividual secondParent = new TuneRobotSensorsGAPopulation().fittestIndividual();
                 crossOveredSimpleGAPopulation.updateIndividualAt(i, selectGenesViaOnePointSelectionFrom(firstParent, secondParent));
@@ -39,6 +39,14 @@ public class TuneRobotSensorsGAGeneticAlgorithm {
             }
         }
         this.simpleGAPopulation = crossOveredSimpleGAPopulation;
+    }
+
+    private TuneRobotSensorsGAIndividual selectParentViaTournamentSelection(TuneRobotSensorsGAPopulation currentPopulation) {
+        TuneRobotSensorsGAPopulation tournamentPopulation = new TuneRobotSensorsGAPopulation(TuneRobotSensorsGAConstants.TOURNAMENT_SELECTION);
+        for (int i = 0; i < TuneRobotSensorsGAConstants.TOURNAMENT_SELECTION; i++) {
+            tournamentPopulation.updateIndividualAt(i, currentPopulation.individual(i));
+        }
+        return tournamentPopulation.fittestIndividual();
     }
 
     private TuneRobotSensorsGAIndividual selectGenesViaOnePointSelectionFrom(TuneRobotSensorsGAIndividual fromFirstParent, TuneRobotSensorsGAIndividual fromSecondParent) {

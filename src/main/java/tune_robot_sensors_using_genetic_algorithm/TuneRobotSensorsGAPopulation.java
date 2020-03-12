@@ -10,13 +10,23 @@ public class TuneRobotSensorsGAPopulation {
     private int totalPopulationFitnessScore;
 
     public TuneRobotSensorsGAPopulation() {
-        simpleGAIndividuals = new ArrayList<>(POPULATION_SIZE);
-        for (int i = 0; i < POPULATION_SIZE; i++) {
+        getIndividuals(POPULATION_SIZE);
+
+    }
+
+    public TuneRobotSensorsGAPopulation(int populationSize) {
+        getIndividuals(populationSize);
+    }
+
+    private void getIndividuals(int populationSize) {
+        simpleGAIndividuals = new ArrayList<>(populationSize);
+        for (int i = 0; i < populationSize; i++) {
             simpleGAIndividuals.add(new TuneRobotSensorsGAIndividual());
         }
         sortByFittestIndividual();
         recalculatePopulationFitness();
     }
+
 
     public void updateIndividualAt(int location, TuneRobotSensorsGAIndividual toIndividual) {
         simpleGAIndividuals.set(location, toIndividual);

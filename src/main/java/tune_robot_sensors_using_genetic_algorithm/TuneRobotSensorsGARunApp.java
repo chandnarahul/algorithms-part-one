@@ -12,6 +12,6 @@ public class TuneRobotSensorsGARunApp {
             generation += 1;
         }
 
-        System.out.println("Final fittest For generation [" + generation + "] " + simpleGAGeneticAlgorithm.getFittest() + " with fitness score of [" + simpleGAGeneticAlgorithm.getFittest().getFitnessScore() + "]");
+        System.out.println("Final fittest For generation [" + generation + "] " + simpleGAGeneticAlgorithm.getFittestPopulations());
     }
 }

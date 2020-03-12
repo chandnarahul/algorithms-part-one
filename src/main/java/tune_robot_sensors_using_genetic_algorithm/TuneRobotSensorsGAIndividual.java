@@ -83,10 +83,15 @@ public class TuneRobotSensorsGAIndividual {
         return "SimpleGAIndividual {" +
                 "chromosome= " + Arrays.toString(chromosome) +
                 ",visitedNodes " + visitedNodes.size() +
-                '}';
+                "}";
     }
 
     public void flipGeneAt(int geneIndex) {
         chromosome[geneIndex] = RobotMovementSensors.randomMovementExcept(chromosome[geneIndex]);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return visitedNodes.size() == ((TuneRobotSensorsGAIndividual) obj).visitedNodes.size();
     }
 }

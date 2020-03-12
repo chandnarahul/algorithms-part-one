@@ -1,7 +1,12 @@
 package tune_robot_sensors_using_genetic_algorithm;
 
-public class TuneRobotSensorsGAGeneticAlgorithm {
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+public class TuneRobotSensorsGAGeneticAlgorithm {
+    private Set<TuneRobotSensorsGAIndividual> fittestPopulations = new HashSet<>();
     private TuneRobotSensorsGAPopulation simpleGAPopulation = new TuneRobotSensorsGAPopulation();
     private int iterations = 0;
 
@@ -17,8 +22,16 @@ public class TuneRobotSensorsGAGeneticAlgorithm {
         return simpleGAPopulation.fittestIndividual();
     }
 
+    public Set<TuneRobotSensorsGAIndividual> getFittestPopulations() {
+        return fittestPopulations;
+    }
+
     public boolean shouldContinueToEvaluate() {
         boolean isLessThanMaxNumberOfIterations = iterations < TuneRobotSensorsGAConstants.NUMBER_OF_ITERATIONS;
+        if (TuneRobotSensorsGAConstants.REACHED_GOAL) {
+            fittestPopulations.add(simpleGAPopulation.fittestIndividual());
+            TuneRobotSensorsGAConstants.REACHED_GOAL = false;
+        }
         if (isLessThanMaxNumberOfIterations && !TuneRobotSensorsGAConstants.REACHED_GOAL) {
             iterations += 1;
             return Boolean.TRUE;
